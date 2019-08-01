@@ -1,5 +1,7 @@
 # PiCluster-FeatureExtractor
 
+[![GitHub Release](https://img.shields.io/github/release/FlorentinTh/PiCluster-Auth?style=flat-square)](https://github.com/FlorentinTh/PiCluster-Auth/releases) [![GitHub](https://img.shields.io/github/license/FlorentinTh/PiCluster-Auth?style=flat-square)](https://github.com/FlorentinTh/PiCluster-Auth/blob/master/LICENSE)
+
 Repository of the feature extractor container deployed on the Raspberry Pi Cluster.
 
 ## Authors
