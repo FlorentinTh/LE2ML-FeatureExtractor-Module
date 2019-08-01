@@ -10,4 +10,4 @@ Repository of the feature extractor container deployed on the Raspberry Pi Clust
 
 ## License
 
-This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
