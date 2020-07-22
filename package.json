@@ -1,0 +1,56 @@
+{
+  "name": "picluster-featureextractor",
+  "version": "1.0.0",
+  "description": "Feature extractor module for the PiCluster project",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint . --ext .js,.json",
+    "build": "babel src --out-dir dist",
+    "start": "npm-run-all build dev",
+    "dev": "cross-env NODE_ENV=development node dist/index.js",
+    "prod": "cross-env NODE_ENV=production node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlorentinTh/PiCluster-FeatureExtractor.git"
+  },
+  "author": "FlorentinTh",
+  "license": "Apache-2.0",
+  "pre-commit": [
+    "lint"
+  ],
+  "bugs": {
+    "url": "https://github.com/FlorentinTh/PiCluster-FeatureExtractor/issues"
+  },
+  "homepage": "https://github.com/FlorentinTh/PiCluster-FeatureExtractor#readme",
+  "engines": {
+    "node": ">=10.x <=12.x"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "complex": "^3.0.1",
+    "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "ezfft": "^1.0.1",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.4.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1"
+  }
+}
