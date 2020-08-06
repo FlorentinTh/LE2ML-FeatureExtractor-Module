@@ -54,16 +54,51 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
           if (counter === 0) {
             tempData = await initData(lineArr);
           } else {
-            for (let i = 0; i < lineArr.length; ++i) {
+            for (let i = 0; i < lineArr.length - 1; ++i) {
               tempData['col_' + i].data.push(lineArr[i]);
             }
 
             if (counter % windowLength === 0) {
               lineReader.pause();
-              // console.log(tempData);
-              for (let i = 0; i < lineArr.length; ++i) {
-                tempData['col_' + i].data = [];
+
+              const result = {};
+
+              for (let i = 0; i < featuresList.length; ++i) {
+                const featureLabel = featuresList[i];
+
+                let tmpSensor;
+
+                for (let j = 0; j < lineArr.length - 1; ++j) {
+                  let itemLabel;
+                  if (!featureLabel.includes('total')) {
+                    itemLabel =
+                      featureLabel +
+                      '_' +
+                      tempData['col_' + j].sensor +
+                      '_' +
+                      tempData['col_' + j].axis;
+
+                    result[itemLabel] = 0;
+                  } else {
+                    if (
+                      tmpSensor === undefined ||
+                      !(tmpSensor === tempData['col_' + j].sensor)
+                    ) {
+                      itemLabel = featureLabel + '_' + tempData['col_' + j].sensor;
+                      result[itemLabel] = 0;
+                      tmpSensor = tempData['col_' + j].sensor;
+                    }
+                  }
+
+                  // TODO HANDLE LABEL COL
+                  // result.label = tempData['col_' + lineArr.length - 1].data;
+                  tempData['col_' + j].data = [];
+                }
               }
+
+              // console.log(tempData.col_9);
+
+              console.log('----------');
               lineReader.resume();
             }
           }
@@ -162,7 +197,7 @@ async function initData(headers) {
         if (header.includes('acc')) {
           sensor = 'acc';
         } else if (header.includes('gyr')) {
-          sensor = 'gy';
+          sensor = 'gyr';
         } else if (header.includes('mag')) {
           sensor = 'mag';
         }
@@ -181,7 +216,7 @@ async function initData(headers) {
         data['col_' + i].axis = axis;
         data['col_' + i].data = [];
       } else {
-        data['col_' + i].data = [];
+        data['col_' + i].data = null;
       }
     }
     resolve(data);
