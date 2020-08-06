@@ -100,48 +100,54 @@ async function getConf() {
 }
 
 async function getFeaturesList(conf) {
-  const featuresListObj = conf.features.list;
+  return new Promise((resolve, reject) => {
+    const featuresListObj = conf.features.list;
 
-  if (featuresListObj === undefined) {
-    throw new Error('Configuration cannot be parsed for features property.');
-  }
-
-  const featuresList = [];
-
-  for (let i = 0; i < featuresListObj.length; ++i) {
-    const featureObj = featuresListObj[i];
-    if (featureObj.container === containerName) {
-      featuresList.push(featureObj.label);
+    if (featuresListObj === undefined) {
+      reject(new Error('Configuration cannot be parsed for features property.'));
     }
-  }
 
-  return featuresList;
+    const featuresList = [];
+
+    for (let i = 0; i < featuresListObj.length; ++i) {
+      const featureObj = featuresListObj[i];
+      if (featureObj.container === containerName) {
+        featuresList.push(featureObj.label);
+      }
+    }
+
+    resolve(featuresList);
+  });
 }
 
 async function getWindow(conf) {
-  const isWindowingTask = conf.windowing.enable;
+  return new Promise((resolve, reject) => {
+    const isWindowingTask = conf.windowing.enable;
 
-  if (!(isWindowingTask.constructor === Boolean)) {
-    throw new Error('Configuration cannot be parsed for windowing property');
-  }
-
-  if (isWindowingTask) {
-    if (!conf.windowing.parameters) {
-      throw new Error('Configuration cannot be parsed for windowing property');
+    if (!(isWindowingTask.constructor === Boolean)) {
+      reject(new Error('Configuration cannot be parsed for windowing property'));
     }
 
-    const windowLength = conf.windowing.parameters.length;
+    if (isWindowingTask) {
+      if (!conf.windowing.parameters) {
+        reject(new Error('Configuration cannot be parsed for windowing property'));
+      }
 
-    if (windowLength === 0 || windowLength > 200) {
-      throw new Error(
-        'Configuration is not valid. Window length should be between 0 and 200'
-      );
+      const windowLength = conf.windowing.parameters.length;
+
+      if (windowLength === 0 || windowLength > 200) {
+        reject(
+          new Error(
+            'Configuration is not valid. Window length should be between 0 and 200'
+          )
+        );
+      }
+
+      resolve(windowLength);
+    } else {
+      resolve(1);
     }
-
-    return windowLength;
-  } else {
-    return 1;
-  }
+  });
 }
 
 async function initData(headers) {
