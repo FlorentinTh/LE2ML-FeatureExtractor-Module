@@ -1,26 +1,98 @@
 class Feature {
-  constructor() {
-    this.result = {};
+  constructor(signal) {
+    this.signal = signal;
   }
 
-  async average(attribute, signal) {
-    if (!(attribute.constructor === String)) {
-      throw new Error('Expected type for attribute signal is String.');
+  async compute(label) {
+    if (label === 'average') {
+      return await this.average();
+    } else if (label === 'std_dev') {
+      return await this.deviation();
+    } else if (label === 'skewness') {
+      return await this.skewness();
+    } else if (label === 'kurtosis') {
+      return await this.kurtosis();
+    } else if (label === 'zero_crossing_rate') {
+      return await this.zeroCrossingRate();
+    } else {
+      throw new Error('Feature function does not exist');
     }
-
-    if (!(signal.constructor === Array)) {
-      throw new Error('Expected type for argument signal is Array.');
-    }
-
-    let sum = 0;
-    for (let i = 0; i < signal.length; ++i) {
-      sum += signal[i];
-    }
-
-    this.setResult('average', attribute, sum / signal.length);
   }
 
-  async averageTotal() {}
+  async average() {
+    return new Promise(resolve => {
+      let sum = 0;
+      for (let i = 0; i < this.signal.length; ++i) {
+        sum += Number(this.signal[i]);
+      }
+
+      resolve(Number(sum / this.signal.length));
+    });
+  }
+
+  async deviation() {
+    const average = await this.average();
+
+    return new Promise(resolve => {
+      let sum = 0;
+      for (let i = 0; i < this.signal.length; ++i) {
+        sum += Math.pow(Number(this.signal[i]) - average, 2);
+      }
+      resolve(Math.sqrt(sum / this.signal.length));
+    });
+  }
+
+  async skewness() {
+    const average = await this.average();
+    const deviation = await this.deviation();
+
+    return new Promise(resolve => {
+      let sum = 0;
+      for (let i = 0; i < this.signal.length; ++i) {
+        sum += Math.pow(Number(this.signal[i]) - average, 3) / Math.pow(deviation, 3);
+      }
+      resolve(
+        (sum *=
+          this.signal.length / ((this.signal.length - 1) * (this.signal.length - 2)))
+      );
+    });
+  }
+
+  async kurtosis() {
+    const average = await this.average();
+    const deviation = await this.deviation();
+
+    return new Promise(resolve => {
+      let sum = 0;
+      for (let i = 0; i < this.signal.length; ++i) {
+        sum += Math.pow(Number(this.signal[i]) - average, 4) / Math.pow(deviation, 4);
+      }
+      const factor =
+        sum *
+        ((this.signal.length * (this.signal.length + 1)) /
+          ((this.signal.length - 1) *
+            (this.signal.length - 2) *
+            (this.signal.length - 3)));
+      resolve(
+        factor -
+          (3 * Math.pow(this.signal.length - 1, 2)) /
+            ((this.signal.length - 2) * (this.signal.length - 3))
+      );
+    });
+  }
+
+  async zeroCrossingRate() {
+    return new Promise(resolve => {
+      let count = 0;
+      for (let i = 1; i < this.signal.length; ++i) {
+        const product = Number(this.signal[i - 1]) * Number(this.signal[i]);
+        if (product < 0) {
+          ++count;
+        }
+      }
+      resolve(count / this.signal.length);
+    });
+  }
 }
 
 export default Feature;

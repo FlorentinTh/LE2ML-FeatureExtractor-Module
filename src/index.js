@@ -5,6 +5,7 @@ import LineByLineReader from 'line-by-line';
 import Config from './utils/config';
 import APIHelper from './helpers/api.helper';
 import Logger from './utils/logger';
+import Feature from './features/Feature';
 
 const config = Config.getConfig();
 
@@ -24,7 +25,7 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
       featuresList = await getFeaturesList(conf);
       let windowLength;
       try {
-        windowLength = await getWindow(conf);
+        windowLength = await getWindowLength(conf);
 
         const inputDataPath = path.join(basePath, 'small.csv');
         const lineReader = new LineByLineReader(inputDataPath, { skipEmptyLines: true });
@@ -46,26 +47,29 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
           encoding: 'utf-8'
         });
 
-        let counter = 0;
+        let lineCounter = 0;
+        let resCounter = 0;
         let tempData;
 
         lineReader.on('line', async line => {
+          lineReader.pause();
           const lineArr = line.split(',');
-          if (counter === 0) {
+          if (lineCounter === 0) {
             tempData = await initData(lineArr);
           } else {
             for (let i = 0; i < lineArr.length - 1; ++i) {
+              if (tempData['col_' + i].data.length === windowLength) {
+                tempData['col_' + i].data = [];
+              }
               tempData['col_' + i].data.push(lineArr[i]);
             }
 
-            if (counter % windowLength === 0) {
-              lineReader.pause();
-
+            if (lineCounter % windowLength === 0) {
               const result = {};
+              const totals = [];
 
               for (let i = 0; i < featuresList.length; ++i) {
                 const featureLabel = featuresList[i];
-
                 let tmpSensor;
 
                 for (let j = 0; j < lineArr.length - 1; ++j) {
@@ -73,40 +77,81 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
                   if (!featureLabel.includes('total')) {
                     itemLabel =
                       featureLabel +
-                      '_' +
+                      '.' +
                       tempData['col_' + j].sensor +
                       '_' +
                       tempData['col_' + j].axis;
 
-                    result[itemLabel] = 0;
+                    const signal = tempData['col_' + j].data;
+                    const feature = new Feature(signal);
+
+                    result[itemLabel] = await feature.compute(featureLabel);
                   } else {
                     if (
                       tmpSensor === undefined ||
                       !(tmpSensor === tempData['col_' + j].sensor)
                     ) {
-                      itemLabel = featureLabel + '_' + tempData['col_' + j].sensor;
+                      itemLabel = featureLabel + '.' + tempData['col_' + j].sensor;
                       result[itemLabel] = 0;
                       tmpSensor = tempData['col_' + j].sensor;
+                      totals.push(itemLabel);
                     }
                   }
-
-                  // TODO HANDLE LABEL COL
-                  // result.label = tempData['col_' + lineArr.length - 1].data;
-                  tempData['col_' + j].data = [];
                 }
               }
 
-              // console.log(tempData.col_9);
+              result.label = lineArr[lineArr.length - 1];
 
-              console.log('----------');
-              lineReader.resume();
+              // computeTotals;
+              for (let i = 0; i < totals.length; ++i) {
+                const featureLabel = totals[i]
+                  .split('.')[0]
+                  .split('_')
+                  .slice(0, -1)
+                  .join('_');
+                const sensor = totals[i].split('.')[1].split('_')[0];
+
+                const keys = Object.keys(result);
+                const signal = [];
+                for (let j = 0; j < keys.length; ++j) {
+                  if (
+                    keys[j].includes(featureLabel) &&
+                    keys[j].includes(sensor) &&
+                    !keys[j].includes('total')
+                  ) {
+                    signal.push(result[keys[j]]);
+                  }
+                }
+
+                const feature = new Feature(signal);
+                result[totals[i]] = await feature.compute('average');
+              }
+
+              // WriteResHeader
+              if (resCounter === 0) {
+                const resHeaders = Object.keys(result);
+                writeStream.write(resHeaders.join(','));
+              }
+
+              // WriteResLine
+              writeStream.write('\n' + Object.values(result).join(','));
+              ++resCounter;
             }
           }
 
-          ++counter;
+          ++lineCounter;
+          lineReader.resume();
         });
 
-        lineReader.on('end', () => {});
+        lineReader.once('end', async () => {
+          lineReader.close();
+          writeStream.end();
+        });
+
+        lineReader.on('error', error => {
+          Logger.error('[Container] ' + error);
+          // TODO CALL API ERROR ROUTE
+        });
       } catch (error) {
         Logger.error('[Container] ' + error);
         // TODO CALL API ERROR ROUTE
@@ -155,7 +200,7 @@ async function getFeaturesList(conf) {
   });
 }
 
-async function getWindow(conf) {
+async function getWindowLength(conf) {
   return new Promise((resolve, reject) => {
     const isWindowingTask = conf.windowing.enable;
 
@@ -168,9 +213,9 @@ async function getWindow(conf) {
         reject(new Error('Configuration cannot be parsed for windowing property'));
       }
 
-      const windowLength = conf.windowing.parameters.length;
+      const length = conf.windowing.parameters.length;
 
-      if (windowLength === 0 || windowLength > 200) {
+      if (length === 0 || length > 200) {
         reject(
           new Error(
             'Configuration is not valid. Window length should be between 0 and 200'
@@ -178,7 +223,7 @@ async function getWindow(conf) {
         );
       }
 
-      resolve(windowLength);
+      resolve(length);
     } else {
       resolve(1);
     }
