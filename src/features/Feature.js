@@ -8,10 +8,14 @@ class Feature {
       return await this.average();
     } else if (label === 'std_dev') {
       return await this.deviation();
-    } else if (label === 'skewness') {
-      return await this.skewness();
-    } else if (label === 'kurtosis') {
-      return await this.kurtosis();
+    } else if (label === 'normal_skewness') {
+      return await this.skewness({ adjusted: false });
+    } else if (label === 'adjusted_skewness') {
+      return await this.skewness({ adjusted: true });
+    } else if (label === 'normal_kurtosis') {
+      return await this.kurtosis({ adjusted: false });
+    } else if (label === 'adjusted_kurtosis') {
+      return await this.kurtosis({ adjusted: true });
     } else if (label === 'zero_crossing_rate') {
       return await this.zeroCrossingRate();
     } else {
@@ -42,42 +46,57 @@ class Feature {
     });
   }
 
-  async skewness() {
+  async skewness(options = { adjusted: false }) {
     const average = await this.average();
     const deviation = await this.deviation();
 
     return new Promise(resolve => {
       let sum = 0;
-      for (let i = 0; i < this.signal.length; ++i) {
-        sum += Math.pow(Number(this.signal[i]) - average, 3) / Math.pow(deviation, 3);
+
+      if (options.adjusted) {
+        for (let i = 0; i < this.signal.length; ++i) {
+          sum += Math.pow(Number(this.signal[i]) - average, 3) / Math.pow(deviation, 3);
+        }
+        resolve(
+          (sum *=
+            this.signal.length / ((this.signal.length - 1) * (this.signal.length - 2)))
+        );
+      } else {
+        for (let i = 0; i < this.signal.length; ++i) {
+          sum += Math.pow(Number(this.signal[i]) - average, 3);
+        }
+        resolve((sum /= Math.pow(deviation, 3) * this.signal.length));
       }
-      resolve(
-        (sum *=
-          this.signal.length / ((this.signal.length - 1) * (this.signal.length - 2)))
-      );
     });
   }
 
-  async kurtosis() {
+  async kurtosis(options = { adjusted: false }) {
     const average = await this.average();
     const deviation = await this.deviation();
 
     return new Promise(resolve => {
       let sum = 0;
-      for (let i = 0; i < this.signal.length; ++i) {
-        sum += Math.pow(Number(this.signal[i]) - average, 4) / Math.pow(deviation, 4);
+      if (options.adjusted) {
+        for (let i = 0; i < this.signal.length; ++i) {
+          sum += Math.pow(Number(this.signal[i]) - average, 4) / Math.pow(deviation, 4);
+        }
+        const factor =
+          sum *
+          ((this.signal.length * (this.signal.length + 1)) /
+            ((this.signal.length - 1) *
+              (this.signal.length - 2) *
+              (this.signal.length - 3)));
+        resolve(
+          factor -
+            (3 * Math.pow(this.signal.length - 1, 2)) /
+              ((this.signal.length - 2) * (this.signal.length - 3))
+        );
+      } else {
+        for (let i = 0; i < this.signal.length; ++i) {
+          sum += Math.pow(Number(this.signal[i]) - average, 4);
+        }
+        resolve((sum /= Math.pow(deviation, 4) * this.signal.length));
       }
-      const factor =
-        sum *
-        ((this.signal.length * (this.signal.length + 1)) /
-          ((this.signal.length - 1) *
-            (this.signal.length - 2) *
-            (this.signal.length - 3)));
-      resolve(
-        factor -
-          (3 * Math.pow(this.signal.length - 1, 2)) /
-            ((this.signal.length - 2) * (this.signal.length - 3))
-      );
     });
   }
 
