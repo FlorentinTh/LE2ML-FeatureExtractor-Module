@@ -66,6 +66,7 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
 
             if (lineCounter % windowLength === 0) {
               const result = {};
+              const correlations = [];
               const totals = [];
 
               for (let i = 0; i < featuresList.length; ++i) {
@@ -75,17 +76,46 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
                 for (let j = 0; j < lineArr.length - 1; ++j) {
                   let itemLabel;
                   if (!featureLabel.includes('total')) {
-                    itemLabel =
-                      featureLabel +
-                      '.' +
-                      tempData['col_' + j].sensor +
-                      '_' +
-                      tempData['col_' + j].axis;
+                    if (!featureLabel.includes('correlations')) {
+                      itemLabel =
+                        featureLabel +
+                        '.' +
+                        tempData['col_' + j].sensor +
+                        '_' +
+                        tempData['col_' + j].axis;
 
-                    const signal = tempData['col_' + j].data;
-                    const feature = new Feature(signal);
+                      const signal = tempData['col_' + j].data;
+                      const feature = new Feature(signal);
 
-                    result[itemLabel] = await feature.compute(featureLabel);
+                      result[itemLabel] = await feature.compute(featureLabel);
+                    } else {
+                      if (
+                        tmpSensor === undefined ||
+                        !(tmpSensor === tempData['col_' + j].sensor)
+                      ) {
+                        const allAxis = ['x', 'y', 'z', 'total'];
+                        allAxis.reduce(
+                          (accumulator, current, index) =>
+                            accumulator.concat(
+                              allAxis.slice(index + 1).map(value => {
+                                const label =
+                                  featureLabel +
+                                  '.' +
+                                  tempData['col_' + j].sensor +
+                                  '_' +
+                                  current +
+                                  '_' +
+                                  value;
+                                result[label] = 0;
+                                tmpSensor = tempData['col_' + j].sensor;
+                                correlations.push(label);
+                                return label;
+                              })
+                            ),
+                          []
+                        );
+                      }
+                    }
                   } else {
                     if (
                       tmpSensor === undefined ||
@@ -102,7 +132,39 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
 
               result.label = lineArr[lineArr.length - 1];
 
-              // computeTotals;
+              // --- computeCorrelations
+              for (let i = 0; i < correlations.length; ++i) {
+                const correlation = correlations[i].split('.')[1].split('_');
+                const correlationSensor = correlation[0];
+                const correlationAxisA = correlation[1];
+                const correlationAxisB = correlation[2];
+
+                const signals = [];
+                Object.keys(tempData).map(value => {
+                  const item = tempData[value];
+                  if (item.sensor === correlationSensor) {
+                    if (!(correlationAxisB === 'total')) {
+                      if (
+                        item.axis === correlationAxisA ||
+                        item.axis === correlationAxisB
+                      ) {
+                        signals.push(item.data);
+                      }
+                    } else {
+                      signals.push(item.data);
+                    }
+                  }
+                });
+                const feature = new Feature(signals);
+
+                result[correlations[i]] = await feature.compute('correlation', {
+                  axisA: correlationAxisA,
+                  axisB: correlationAxisB
+                });
+              }
+              // ---
+
+              // --- computeTotals;
               for (let i = 0; i < totals.length; ++i) {
                 const featureLabel = totals[i]
                   .split('.')[0]
@@ -126,16 +188,19 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
                 const feature = new Feature(signal);
                 result[totals[i]] = await feature.compute('average');
               }
+              // ---
 
-              // WriteResHeader
+              // --- WriteResHeader
               if (resCounter === 0) {
                 const resHeaders = Object.keys(result);
                 writeStream.write(resHeaders.join(','));
               }
+              // ---
 
-              // WriteResLine
+              // --- WriteResLine
               writeStream.write('\n' + Object.values(result).join(','));
               ++resCounter;
+              // ---
             }
           }
 
