@@ -29,12 +29,12 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "axios": "^0.19.2",
-    "complex": "^3.0.1",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "ezfft": "^1.0.1",
     "line-by-line": "^0.1.6",
+    "mathjs": "^7.1.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
