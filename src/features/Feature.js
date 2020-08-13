@@ -1,3 +1,5 @@
+import FFTReal from './utils/FFTReal';
+import { complex } from 'mathjs';
 class Feature {
   constructor(signal) {
     this.signal = signal;
@@ -20,6 +22,12 @@ class Feature {
       return await this.zeroCrossingRate();
     } else if (label === 'correlation') {
       return await this.correlation(options.axisA, options.axisB);
+    } else if (label === 'dc_component') {
+      return await this.dc();
+    } else if (label === 'energy') {
+      return await this.energy();
+    } else if (label === 'entropy') {
+      return await this.entropy();
     } else {
       throw new Error('Feature function does not exist');
     }
@@ -178,6 +186,42 @@ class Feature {
     }
 
     return cov / deviation;
+  }
+
+  async dc() {
+    return new Promise(resolve => {
+      let sum = 0;
+      const fft = new FFTReal(this.signal);
+      for (let i = 0; i < fft.length; ++i) {
+        sum += Math.pow(complex(fft[i]).re, 2);
+      }
+      resolve((sum /= fft.length));
+    });
+  }
+
+  async energy(options = { fft: null }) {
+    return new Promise(resolve => {
+      let sum = 0;
+      const fft = options.fft === null ? new FFTReal(this.signal) : options.fft;
+      for (let i = 0; i < fft.length; ++i) {
+        sum += Math.pow(complex(fft[i]).re, 2) + Math.pow(complex(fft[i]).im, 2);
+      }
+      resolve((sum /= fft.length));
+    });
+  }
+
+  async entropy() {
+    let sum = 0;
+    const fft = new FFTReal(this.signal);
+    const energy = await this.energy({ fft: fft });
+
+    for (let i = 0; i < fft.length; ++i) {
+      sum +=
+        (Math.pow(complex(fft[i]).re, 2) + Math.pow(complex(fft[i]).im, 2)) /
+        (fft.length - energy);
+    }
+
+    return (sum *= Number(-1));
   }
 }
 

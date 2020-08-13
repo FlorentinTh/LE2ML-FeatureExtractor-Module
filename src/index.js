@@ -14,7 +14,7 @@ APIHelper.setBaseUrl(baseApiUrl);
 
 const basePath = path.join(__dirname, '..', 'job');
 const containerName = 'core-features';
-const outputDest = path.join(basePath, 'features', 'core-features.csv');
+const outputDest = path.join(basePath, 'features');
 
 (async () => {
   let conf;
@@ -27,7 +27,7 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
       try {
         windowLength = await getWindowLength(conf);
 
-        const inputDataPath = path.join(basePath, 'small.csv');
+        const inputDataPath = path.join(basePath, 'input_test.csv');
         const lineReader = new LineByLineReader(inputDataPath, { skipEmptyLines: true });
 
         try {
@@ -43,9 +43,12 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
           }
         }
 
-        const writeStream = fs.createWriteStream(outputDest, {
-          encoding: 'utf-8'
-        });
+        const writeStream = fs.createWriteStream(
+          path.join(outputDest, 'core-features.csv'),
+          {
+            encoding: 'utf-8'
+          }
+        );
 
         let lineCounter = 0;
         let resCounter = 0;
@@ -61,7 +64,7 @@ const outputDest = path.join(basePath, 'features', 'core-features.csv');
               if (tempData['col_' + i].data.length === windowLength) {
                 tempData['col_' + i].data = [];
               }
-              tempData['col_' + i].data.push(lineArr[i]);
+              tempData['col_' + i].data.push(Number(lineArr[i]));
             }
 
             if (lineCounter % windowLength === 0) {
@@ -280,7 +283,7 @@ async function getWindowLength(conf) {
 
       const length = conf.windowing.parameters.length;
 
-      if (length === 0 || length > 200) {
+      if (length === 0) {
         reject(
           new Error(
             'Configuration is not valid. Window length should be between 0 and 200'
