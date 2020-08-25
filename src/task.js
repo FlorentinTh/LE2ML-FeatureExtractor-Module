@@ -153,7 +153,7 @@ class Task {
       .then(response => {
         if (response) {
           Logger.info(
-            `[API] Info: Feature Extraction task started by user: ${this.user} for job: ${this.job} successfully updated (STATUS: STARTED).`
+            `[API] Info: Feature Extraction task started by user: ${this.user} for job: ${this.job} successfully updated (STATUS: COMPLETED).`
           );
         }
       })
@@ -164,7 +164,7 @@ class Task {
 
   async error() {
     axios
-      .post(`/jobs/${this.job}/task/error?task=${this.name}`, null, {
+      .post(`/jobs/${this.job}/tasks/error?task=${this.name}`, null, {
         headers: APIHelper.setAPIKey()
       })
       .then(response => {
