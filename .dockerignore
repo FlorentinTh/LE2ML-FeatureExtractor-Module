@@ -1,0 +1,17 @@
+.git
+.vscode/
+dist/
+logs/
+node_modules/
+.dockerignore
+.editorconfig
+.eslintignore
+.eslintrc
+.gitattributes
+.gitignore
+.prettierignore
+.prettierrc
+*.md
+docker-compose.yml
+Dockerfile
+LICENSE

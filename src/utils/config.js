@@ -10,6 +10,7 @@ const defaultValidationSchema = Joi.object({
   API_VERSION: Joi.string().required(),
   API_APP_KEY: Joi.string().required(),
   API_PROXY: Joi.string().required(),
+  DATA_BASE_PATH: Joi.string().required(),
   CONTAINER_NAME: Joi.string().required()
 })
   .unknown()

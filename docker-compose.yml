@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  features:
+    image: core-inertial-features:latest
+    environment:
+      DATA_USER_ID: 5ed93a900857444fa43b8417
+      DATA_JOB_ID: 5f46d94d3233a07f34471d0f
+      DATA_TOKEN: 512be448-d59f-4e64-85ef-d59cd68c4ba6
+    volumes:
+      - d:/Development/PiCluster-data/5ed93a900857444fa43b8417/jobs/5f46d94d3233a07f34471d0f:/job
+    network_mode: bridge

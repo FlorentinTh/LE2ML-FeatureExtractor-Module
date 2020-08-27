@@ -12,7 +12,7 @@ class Task {
   constructor() {
     this.name = 'features';
     this.state = 'started';
-    this.containerName = 'core-inertial-features';
+    this.containerName = config.container_name;
     this.user = config.data.user_id;
     this.job = config.data.job_id;
   }
@@ -38,21 +38,9 @@ class Task {
     const isWindowing = conf.windowing.enable;
     let input;
     if (isWindowing) {
-      input = path.join(
-        config.data.base_path,
-        this.user,
-        'jobs',
-        this.job,
-        'windowing.csv'
-      );
+      input = path.join(config.data.base_path, 'windowing.csv');
     } else {
-      input = path.join(
-        config.data.base_path,
-        this.user,
-        'jobs',
-        this.job,
-        conf.input.file.filename
-      );
+      input = path.join(config.data.base_path, conf.input.file.filename);
     }
 
     try {
@@ -68,14 +56,7 @@ class Task {
   }
 
   async getConf() {
-    const confPath = path.resolve(
-      config.data.base_path,
-      this.user,
-      'jobs',
-      this.job,
-      'conf.json'
-    );
-
+    const confPath = path.resolve(config.data.base_path, 'conf.json');
     let file;
     try {
       file = await fs.promises.readFile(confPath);

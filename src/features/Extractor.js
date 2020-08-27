@@ -28,13 +28,7 @@ class Extractor {
   }
 
   async makeOutput() {
-    const outputFolderPath = path.join(
-      config.data.base_path,
-      config.data.user_id,
-      'jobs',
-      config.data.job_id,
-      'features'
-    );
+    const outputFolderPath = path.join(config.data.base_path, 'features');
 
     try {
       await fs.promises.access(outputFolderPath);
@@ -55,51 +49,54 @@ class Extractor {
   }
 
   async extract() {
-    let lineCounter = 0;
-    let resCounter = 0;
+    return new Promise((resolve, reject) => {
+      let lineCounter = 0;
+      let resCounter = 0;
 
-    this.lineReader.on('line', async line => {
-      this.lineReader.pause();
+      this.lineReader.on('line', async line => {
+        this.lineReader.pause();
 
-      line = line.split(',');
-      if (lineCounter === 0) {
-        this.processingData = await this.initProcessingData(line);
-      } else {
-        await this.buildProcessingData(line);
+        line = line.split(',');
+        if (lineCounter === 0) {
+          this.processingData = await this.initProcessingData(line);
+        } else {
+          await this.buildProcessingData(line);
 
-        if (lineCounter % this.windowLength === 0) {
-          await this.computeFeatures(line);
+          if (lineCounter % this.windowLength === 0) {
+            await this.computeFeatures(line);
 
-          if (this.correlations.length > 0) {
-            await this.computeCorrelations();
+            if (this.correlations.length > 0) {
+              await this.computeCorrelations();
+            }
+
+            if (this.totals.length > 0) {
+              await this.computeTotals();
+            }
+
+            if (resCounter === 0) {
+              await this.writeOutputFileHeaders();
+            }
+
+            await this.writeOutputFileLine();
+
+            ++resCounter;
           }
-
-          if (this.totals.length > 0) {
-            await this.computeTotals();
-          }
-
-          if (resCounter === 0) {
-            await this.writeOutputFileHeaders();
-          }
-
-          await this.writeOutputFileLine();
-
-          ++resCounter;
         }
-      }
 
-      ++lineCounter;
-      await this.resetData();
-      this.lineReader.resume();
-    });
+        ++lineCounter;
+        await this.resetData();
+        this.lineReader.resume();
+      });
 
-    this.lineReader.once('end', async () => {
-      this.lineReader.close();
-      this.outputFile.end();
-    });
+      this.lineReader.once('end', async () => {
+        this.lineReader.close();
+        this.outputFile.end();
+        resolve();
+      });
 
-    this.lineReader.on('error', error => {
-      throw error;
+      this.lineReader.once('error', error => {
+        reject(new Error('[Container] : ' + error));
+      });
     });
   }
 
