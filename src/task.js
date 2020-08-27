@@ -64,7 +64,7 @@ class Task {
     }
 
     this.state = 'completed';
-    return await this.success();
+    await this.success();
   }
 
   async getConf() {
@@ -120,7 +120,7 @@ class Task {
           reject(new Error('Configuration cannot be parsed for windowing property'));
         }
 
-        const length = conf.windowing.parameters.length;
+        const length = conf.windowing.parameters.length.match(/(\d+)/)[0];
 
         if (length === 0) {
           reject(
