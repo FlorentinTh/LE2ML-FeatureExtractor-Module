@@ -52,12 +52,14 @@ class Extractor {
     return new Promise((resolve, reject) => {
       let lineCounter = 0;
       let resCounter = 0;
+      let header;
 
       this.lineReader.on('line', async line => {
         this.lineReader.pause();
 
         line = line.split(',');
         if (lineCounter === 0) {
+          header = line;
           this.processingData = await this.initProcessingData(line);
         } else {
           await this.buildProcessingData(line);
@@ -78,7 +80,7 @@ class Extractor {
             }
 
             await this.writeOutputFileLine();
-
+            this.processingData = await this.initProcessingData(header);
             ++resCounter;
           }
         }
@@ -163,9 +165,15 @@ class Extractor {
               this.processingData['col_' + j].sensor +
               '_' +
               this.processingData['col_' + j].axis;
+
             const signal = this.processingData['col_' + j].data;
             const feature = new Feature(signal);
-            this.result[itemLabel] = await feature.compute(featureLabel);
+
+            try {
+              this.result[itemLabel] = await feature.compute(featureLabel);
+            } catch (error) {
+              throw new Error(error);
+            }
           } else {
             if (
               tmpSensor === undefined ||
