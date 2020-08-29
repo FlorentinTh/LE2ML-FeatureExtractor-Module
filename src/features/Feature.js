@@ -1,5 +1,4 @@
 import FFTReal from './utils/FFTReal';
-import { complex } from 'mathjs';
 class Feature {
   constructor(signal) {
     this.signal = signal;
@@ -10,13 +9,13 @@ class Feature {
       return await this.average();
     } else if (label === 'std_dev') {
       return await this.deviation();
-    } else if (label === 'normal_skewness') {
+    } else if (label === 'skewness_normal') {
       return await this.skewness({ adjusted: false });
-    } else if (label === 'adjusted_skewness') {
+    } else if (label === 'skewness_adjusted') {
       return await this.skewness({ adjusted: true });
-    } else if (label === 'normal_kurtosis') {
+    } else if (label === 'kurtosis_normal') {
       return await this.kurtosis({ adjusted: false });
-    } else if (label === 'adjusted_kurtosis') {
+    } else if (label === 'kurtosis_adjusted') {
       return await this.kurtosis({ adjusted: true });
     } else if (label === 'zero_crossing_rate') {
       return await this.zeroCrossingRate();
@@ -193,7 +192,7 @@ class Feature {
       let sum = 0;
       const fft = new FFTReal(this.signal);
       for (let i = 0; i < fft.length; ++i) {
-        sum += Math.pow(complex(fft[i]).re, 2);
+        sum += Math.pow(fft[i].re, 2);
       }
       resolve((sum /= fft.length));
     });
@@ -204,7 +203,7 @@ class Feature {
       let sum = 0;
       const fft = options.fft === null ? new FFTReal(this.signal) : options.fft;
       for (let i = 0; i < fft.length; ++i) {
-        sum += Math.pow(complex(fft[i]).re, 2) + Math.pow(complex(fft[i]).im, 2);
+        sum += Math.pow(fft[i].re, 2) + Math.pow(fft[i].im, 2);
       }
       resolve((sum /= fft.length));
     });
@@ -216,9 +215,7 @@ class Feature {
     const energy = await this.energy({ fft: fft });
 
     for (let i = 0; i < fft.length; ++i) {
-      sum +=
-        (Math.pow(complex(fft[i]).re, 2) + Math.pow(complex(fft[i]).im, 2)) /
-        (fft.length - energy);
+      sum += (Math.pow(fft[i].re, 2) + Math.pow(fft[i].im, 2)) / (fft.length - energy);
     }
 
     return (sum *= Number(-1));
