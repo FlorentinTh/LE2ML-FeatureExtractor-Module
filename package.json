@@ -1,7 +1,7 @@
 {
-  "name": "picluster-featureextractor",
+  "name": "le2ml-featureextractor",
   "version": "1.0.0",
-  "description": "Feature extractor module for the PiCluster project",
+  "description": "Feature extractor module for the LE2ML project",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . --ext .js,.json",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlorentinTh/PiCluster-FeatureExtractor.git"
+    "url": "git+https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module.git"
   },
   "author": "FlorentinTh",
   "license": "Apache-2.0",
@@ -20,15 +20,15 @@
     "lint"
   ],
   "bugs": {
-    "url": "https://github.com/FlorentinTh/PiCluster-FeatureExtractor/issues"
+    "url": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/issues"
   },
-  "homepage": "https://github.com/FlorentinTh/PiCluster-FeatureExtractor#readme",
+  "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "engines": {
     "node": ">=10.x <=12.x"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
@@ -41,16 +41,16 @@
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.11.0",
+    "eslint": "^7.12.1",
     "eslint-config-node": "^4.1.0",
-    "eslint-config-prettier": "^6.13.0",
-    "eslint-config-standard": "^14.1.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-standard": "^16.0.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-json": "^2.1.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1"
   }
