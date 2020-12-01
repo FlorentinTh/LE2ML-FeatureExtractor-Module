@@ -237,6 +237,7 @@ class Extractor {
             signals.push(item.data);
           }
         }
+        return true;
       });
 
       const feature = new Feature(signals);
