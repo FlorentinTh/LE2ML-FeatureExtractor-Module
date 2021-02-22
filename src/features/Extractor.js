@@ -250,11 +250,7 @@ class Extractor {
 
   async computeTotals() {
     for (let i = 0; i < this.totals.length; ++i) {
-      const featureLabel = this.totals[i]
-        .split('.')[0]
-        .split('_')
-        .slice(0, -1)
-        .join('_');
+      const featureLabel = this.totals[i].split('.')[0].split('_').slice(0, -1).join('_');
       const sensor = this.totals[i].split('.')[1].split('_')[0];
       const keys = Object.keys(this.result);
       const signal = [];
