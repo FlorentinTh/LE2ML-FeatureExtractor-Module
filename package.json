@@ -6,9 +6,12 @@
   "scripts": {
     "lint": "eslint . --ext .js,.json",
     "build": "babel src --out-dir dist",
-    "start": "npm-run-all build dev",
     "dev": "cross-env NODE_ENV=development node dist/index.js",
-    "prod": "cross-env NODE_ENV=production node index.js"
+    "start": "npm-run-all build dev",
+    "prod": "cross-env NODE_ENV=production node index.js",
+    "commit": "git-cz",
+    "release": "standard-version",
+    "publish": "git push --follow-tags"
   },
   "repository": {
     "type": "git",
@@ -38,6 +41,7 @@
     "@babel/core": "^7.14.2",
     "@babel/eslint-parser": "^7.14.2",
     "@babel/preset-env": "^7.14.2",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.26.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.3.0",
@@ -49,6 +53,12 @@
     "eslint-plugin-promise": "^5.1.0",
     "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
-    "prettier": "^2.3.0"
+    "prettier": "^2.3.0",
+    "standard-version": "^9.3.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
