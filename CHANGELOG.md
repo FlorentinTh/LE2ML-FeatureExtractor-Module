@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.1...v1.0.2) (2021-05-27)
+
+
+### Chore
+
+* **deps:** update dependencies ([f8c1118](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/f8c11189b36c4d15ae20a042d85e2483eea7dd41))
+* **deps:** update dependencies ([555eab0](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/555eab0187505069d748a30a609c4ba833f6b063))
+* **deps:** update dependencies ([d810864](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/d81086426a143cf6bada82e7220e52867403a413))
+* **deps:** update dependencies ([22bff79](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/22bff7964f6d9cdf3350b49e7e10a4f08288c2ea))
+* **deps:** update dependencies ([53935a0](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/53935a02cda11ed0e3b85e854753e13930fcd5d4))
+* **deps:** update dependencies and update npm to v7.x ([ba751f0](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/ba751f08ce6e2a2eb48337078309705d863b2036))
+
 ### 1.0.1 (2021-05-13)
 
 
