@@ -1,6 +1,6 @@
 # LE2ML-FeatureExtractor-Module
 
-[![GitHub Release](https://img.shields.io/github/release/FlorentinTh/LE2ML-FeatureExtractor-Module?style=flat-square)](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/releases) [![GitHub](https://img.shields.io/github/license/FlorentinTh/LE2ML-FeatureExtractor-Module?style=flat-square)](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/blob/master/LICENSE)
+[![Snyk](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/actions/workflows/dependencies.yml/badge.svg)](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/actions/workflows/dependencies.yml) [![GitHub Release](https://img.shields.io/github/release/FlorentinTh/LE2ML-FeatureExtractor-Module)](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/releases) [![GitHub License](https://img.shields.io/github/license/FlorentinTh/LE2ML-FeatureExtractor-Module)](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/blob/master/LICENSE)
 
 Repository of the feature extraction module for the LE2ML workbench.
 
