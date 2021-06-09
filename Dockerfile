@@ -4,6 +4,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
+RUN npm i -g npm@latest --registry=https://registry.npmjs.org
+
 RUN npm install
 
 RUN npm run build
@@ -12,10 +14,10 @@ FROM node:12-slim
 
 COPY package*.json ./
 
-COPY .env .
+COPY --from=build /usr/src/app/build .
 
-COPY --from=build /usr/src/app/dist .
+RUN npm i -g npm@latest --registry=https://registry.npmjs.org
 
 RUN npm install --only=prod
 
-CMD npm run prod
+CMD npm run production
