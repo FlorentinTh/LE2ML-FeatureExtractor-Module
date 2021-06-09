@@ -4,11 +4,14 @@
   "description": "Feature extractor module for the LE2ML project",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .js,.json",
-    "build": "babel src --out-dir dist",
-    "dev": "cross-env NODE_ENV=development node dist/index.js",
+    "clean": "rimraf build",
+    "compile": "babel src --out-dir build",
+    "copy": "cpy .env build",
+    "build": "npm-run-all clean compile copy",
+    "dev": "cross-env NODE_ENV=development node build/index.js",
     "start": "npm-run-all build dev",
-    "prod": "cross-env NODE_ENV=production node index.js",
+    "production": "cross-env NODE_ENV=production node index.js",
+    "lint": "eslint . --ext .js,.json",
     "commit": "git-cz",
     "release": "standard-version",
     "publish": "git push --follow-tags"
@@ -41,6 +44,7 @@
     "@babel/core": "^7.14.3",
     "@babel/eslint-parser": "^7.14.4",
     "@babel/preset-env": "^7.14.4",
+    "cpy-cli": "^3.1.1",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.28.0",
     "eslint-config-node": "^4.1.0",
@@ -54,6 +58,7 @@
     "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
     "prettier": "^2.3.1",
+    "rimraf": "^3.0.2",
     "standard-version": "^9.3.0"
   },
   "config": {
