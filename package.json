@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
-    "@babel/core": "^7.14.3",
+    "@babel/core": "^7.14.6",
     "@babel/eslint-parser": "^7.14.4",
     "@babel/preset-env": "^7.14.4",
     "cpy-cli": "^3.1.1",
