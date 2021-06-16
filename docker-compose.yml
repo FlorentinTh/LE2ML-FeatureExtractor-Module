@@ -8,5 +8,5 @@ services:
       DATA_JOB_ID: 5f46d94d3233a07f34471d0f
       DATA_TOKEN: 512be448-d59f-4e64-85ef-d59cd68c4ba6
     volumes:
-      - d:/Development/LE2ML-Data/5ed93a900857444fa43b8417/jobs/5f46d94d3233a07f34471d0f:/job
+      - <your_path>/<user_id>/jobs/<job_id>:/job
     network_mode: bridge
