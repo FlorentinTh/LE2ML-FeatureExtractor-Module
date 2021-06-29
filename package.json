@@ -31,7 +31,7 @@
   "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "core-js": "^3.15.0",
+    "core-js": "^3.15.2",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "ezfft": "^1.0.2",
@@ -57,7 +57,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "npm-run-all": "^4.1.5",
     "pre-commit": "^1.2.2",
-    "prettier": "^2.3.1",
+    "prettier": "^2.3.2",
     "rimraf": "^3.0.2",
     "standard-version": "^9.3.0"
   },
