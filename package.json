@@ -40,7 +40,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.8",
+    "@babel/cli": "file:latest@babel/core@latest@babel/eslint-parser@latest@babel/preset-env@latestaxios@latestcore-js@latesteslint-plugin-import@latesteslint-plugin-prettier@latestprettier@latest",
     "@babel/core": "^7.15.0",
     "@babel/eslint-parser": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
