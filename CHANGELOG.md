@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.3...v1.0.4) (2021-09-09)
+
+
+### Bug Fixes
+
+* **deps:** fix error in previous dependencies update command ([1c29fc6](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/1c29fc6f4d2ac4cbec6fdf9be2884a56c02af738))
+
 ### [1.0.3](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.2...v1.0.3) (2021-09-09)
 
 
