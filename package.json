@@ -31,7 +31,7 @@
   "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "dependencies": {
     "axios": "^0.21.4",
-    "core-js": "^3.17.3",
+    "core-js": "^3.18.0",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "ezfft": "^1.0.2",
