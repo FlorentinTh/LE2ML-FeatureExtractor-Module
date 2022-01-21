@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.8](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.7...v1.0.8) (2022-01-21)
+
+
+### CI
+
+* **build-workflow:** drop support of node-12 ([1babebd](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/1babebd22cc4fc278ba9ddcbafdab5563b1666f1))
+
+
+### Chore
+
+* **deps:** update dependencies ([58cc6d0](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/58cc6d03493ad679c07df61c6d93730a6ac80539))
+* **dockerfile:** now build the project in a node-14 container instead of node-12 ([a907475](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/a907475d6070139c7cd68e233ba3d8f6162e4745))
+
 ### [1.0.7](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.6...v1.0.7) (2022-01-13)
 
 
