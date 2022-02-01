@@ -31,22 +31,22 @@
   "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "dependencies": {
     "axios": "^0.25.0",
-    "core-js": "^3.20.3",
+    "core-js": "^3.21.0",
     "cross-env": "^7.0.3",
-    "dotenv": "^14.2.0",
+    "dotenv": "^15.0.0",
     "ezfft": "^1.0.4",
-    "joi": "^17.5.0",
+    "joi": "^17.6.0",
     "line-by-line": "^0.1.6",
-    "winston": "^3.4.0"
+    "winston": "^3.5.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.8",
-    "@babel/core": "^7.16.10",
+    "@babel/core": "^7.16.12",
     "@babel/eslint-parser": "^7.16.5",
     "@babel/preset-env": "^7.16.11",
     "cpy-cli": "^3.1.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.7.0",
+    "eslint": "^8.8.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-standard": "^16.0.3",
