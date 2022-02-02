@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.9](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.8...v1.0.9) (2022-02-02)
+
+
+### CI
+
+* **build-workflow:** remove update npm task that is not required anymore ([92ac519](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/92ac51936cfa0716625e4ee50dc9c57aa47a0311))
+
+
+### Refactors
+
+* **src-files:** refactor to comply with object-shorthand eslint rule ([5ebc5a5](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/5ebc5a51cc8858c26b292bcd1eafc2079d9cb529))
+
+
+### Chore
+
+* **deps:** update dependencies ([9c2f2a4](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/9c2f2a400be7ddae25e4b10c1e289be7fa9275de))
+* **deps:** update dependencies ([06e5cf2](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/06e5cf21fa7da32761041de648e9dd1172127589))
+
 ### [1.0.8](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.7...v1.0.8) (2022-01-21)
 
 
