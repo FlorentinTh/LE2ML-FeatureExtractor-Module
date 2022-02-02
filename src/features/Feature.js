@@ -46,7 +46,7 @@ class Feature {
 
   async deviation(options = { signal: null }) {
     const signal = options.signal === null ? this.signal : options.signal;
-    const average = await this.average({ signal: signal });
+    const average = await this.average({ signal });
 
     return new Promise(resolve => {
       let sum = 0;
@@ -212,7 +212,7 @@ class Feature {
   async entropy() {
     let sum = 0;
     const fft = new FFTReal(this.signal);
-    const energy = await this.energy({ fft: fft });
+    const energy = await this.energy({ fft });
 
     for (let i = 0; i < fft.length; ++i) {
       sum += (Math.pow(fft[i].re, 2) + Math.pow(fft[i].im, 2)) / (fft.length - energy);
