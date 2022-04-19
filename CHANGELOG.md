@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.11](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.10...v1.0.11) (2022-04-19)
+
+
+### Chore
+
+* **deps:** update dependencies ([e989b26](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/e989b2655c98ff746f9421754381994dfc61ba4d))
+* **deps:** update dependencies ([696300f](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/696300f95d18bf968df8e24f19400cf1a5e0bbdd))
+* **deps:** update dependencies ([8ec04e5](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/8ec04e517d667a0497ceeadd9d3299ac8e65589f))
+* **eslint:** change eslint config and dependencies ([ae325f7](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/ae325f7a31b5dcca1f70cda89fbac587e0a82c07))
+
 ### [1.0.10](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.9...v1.0.10) (2022-03-04)
 
 
