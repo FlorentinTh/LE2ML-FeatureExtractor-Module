@@ -1,6 +1,6 @@
 {
   "name": "le2ml-featureextractor",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Feature extractor module for the LE2ML project",
   "main": "index.js",
   "scripts": {
