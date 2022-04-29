@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.13](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.12...v1.0.13) (2022-04-29)
+
+
+### Chore
+
+* **deps:** update dependencies ([9afa20b](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/commit/9afa20b0d182169626a082dc4e7422c28d51f573))
+
 ### [1.0.12](https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module/compare/v1.0.11...v1.0.12) (2022-04-22)
 
 
