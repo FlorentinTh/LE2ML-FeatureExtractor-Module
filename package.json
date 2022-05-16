@@ -31,9 +31,9 @@
   "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "dependencies": {
     "axios": "^0.27.2",
-    "core-js": "^3.22.4",
+    "core-js": "^3.22.5",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.0",
+    "dotenv": "^16.0.1",
     "ezfft": "^1.0.4",
     "joi": "^17.6.0",
     "line-by-line": "^0.1.6",
@@ -56,7 +56,7 @@
     "pre-commit": "^1.2.2",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
-    "standard-version": "^9.3.2"
+    "standard-version": "^9.5.0"
   },
   "config": {
     "commitizen": {
