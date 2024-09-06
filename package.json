@@ -30,12 +30,12 @@
   },
   "homepage": "https://github.com/FlorentinTh/LE2ML-FeatureExtractor-Module#readme",
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
     "core-js": "^3.23.3",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "ezfft": "^1.0.4",
-    "joi": "^17.6.0",
+    "joi": "^17.7.1",
     "line-by-line": "^0.1.6",
     "winston": "^3.8.0"
   },
